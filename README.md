@@ -10,7 +10,7 @@ What is the largest prime factor of the number 600851475143?
 
 ### Решения:
 1. Цикл
-```
+```clojure
 (defn prime? [n]
   (let [sqrt (Math/sqrt n)]
     (loop [x 2]
@@ -28,7 +28,7 @@ What is the largest prime factor of the number 600851475143?
 ```
 
 1. Хвостовая рекурсия
-```
+```clojure
 (defn tail-rec-prime-factor [x n]
   (if (and (zero? (rem n x)) (prime? x))
     x
@@ -39,7 +39,7 @@ What is the largest prime factor of the number 600851475143?
 ```
 
 1. Модульная реализация (используются range, filter)
-```
+```clojure
 (defn divisor? [n x]
   (zero? (rem n x)))
 
@@ -51,7 +51,7 @@ What is the largest prime factor of the number 600851475143?
 
 1. С ленивой последовательностью (iterate) и отображением (map)
 
-```
+```clojure
 (defn lazy-and-map-largest-prime-factor [n]
   (let [primes (filter some? (map #(if (prime? %) % nil) (take (- (quot n 2) 1) (iterate inc 2)))),
         prime-divisor (filter (fn [x] (divisor? n x)) primes)]
@@ -59,7 +59,7 @@ What is the largest prime factor of the number 600851475143?
 ```
 
 1. Реализация на языке C++:
-```
+``` cpp
 #include <iostream>
 #include <cmath>
 using namespace std;
@@ -97,9 +97,13 @@ int main(){
 Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:
 
 21 22 23 24 25
+
 20  7  8  9 10
+
 19  6  1  2 11
+
 18  5  4  3 12
+
 17 16 15 14 13
 
 It can be verified that the sum of the numbers on the diagonals is 101.
@@ -108,7 +112,7 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 
 ### Решения:
 1. Хвостовая рекурсия
-``` 
+``` clojure
 (defn spirals [size sum add num c]
   (if (< num (* size size))
     (if (< c 4)
@@ -122,7 +126,8 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 ```
 
 1. Рекурсия
-``` (defn rec-spiral-diagonals [n]
+``` clojure
+(defn rec-spiral-diagonals [n]
   (if (= n 1)
     1
     (+ (- (* 4 n n) (* 6 (- n 1))) (rec-spiral-diagonals (- n 2)))))
@@ -130,7 +135,8 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 
 1. Модульная реализация (генерация - iterate, фильтрация - filter и свертка - reduce), с использованием ленивой коллекции (iterate) и цикла (loop в вспомогательной функции)
 
-``` (defn find-n [x]
+``` clojure
+(defn find-n [x]
   (loop [i 1]
     (if (and (< (* i i) x) (<= x (* (inc i) (inc i))))
       (inc i)
@@ -155,7 +161,7 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 ```
 
 1. Реализация на языке C++:
-```
+```cpp
 #include <iostream>
 using namespace std;
 
