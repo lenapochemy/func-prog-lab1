@@ -2,11 +2,12 @@
   (:require [clojure.test :refer [deftest is testing]]
             [lab1 :refer :all]))
 
-;; (def input-problem-3 600851475143)
-(def input-problem-3 333333333)
+(def input-problem-3 600851475143)
+;; (def input-problem-3 333333333)
 (def input-problem-28 101)
 
-(def answer-problem-3 333667)
+;; (def answer-problem-3 333667)
+(def answer-problem-3 6857)
 (def answer-problem-28 692101)
 
 (deftest problem-28-test
