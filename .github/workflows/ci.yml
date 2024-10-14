@@ -24,5 +24,11 @@ jobs:
       - name: Install clj-kondo
         run: npm install -g clj-kondo
 
+      - name: Lint code
+        run: clojure -A:lint
+  
+      - name: Format code
+        run: clojure -A:format
+
       - name: Run tests
         run: clojure -A:test
