@@ -23,19 +23,7 @@ jobs:
 
       - name: Install clj-kondo
         run: npm install -g clj-kondo
-        
-      - name: Install dependencies
-        run: 
-          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.11.1"}}}' -e '(require\'[clojure.tools.deps :as deps]) (deps/install!)'
           
       - name: Run tests
-        run: 
-          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.11.1"}
-                                org.clojure/tools.nrepl {:mvn/version "0.8.3"}
-                                org.clojure/clojure.test {:mvn/version "1.11.1"}}}'
-          -e '(require\'[clojure.test :refer :all])
-             (run-tests)'
-
-      # - name: Run Unit tests
-      #   run: clojure -X:test/run
+        run: clojure -A:test
 
