@@ -9,7 +9,7 @@ What is the largest prime factor of the number 600851475143?
 
 
 ### Решения:
-1. Цикл
++ Цикл
 ```clojure
 (defn prime? [n]
   (let [sqrt (Math/sqrt n)]
@@ -27,7 +27,7 @@ What is the largest prime factor of the number 600851475143?
       (recur (dec x)))))
 ```
 
-1. Хвостовая рекурсия
++ Хвостовая рекурсия
 ```clojure
 (defn tail-rec-prime-factor [x n]
   (if (and (zero? (rem n x)) (prime? x))
@@ -38,7 +38,7 @@ What is the largest prime factor of the number 600851475143?
   (tail-rec-prime-factor (quot n 2) n))
 ```
 
-1. Модульная реализация (используются range, filter)
++ Модульная реализация (используются range, filter)
 ```clojure
 (defn divisor? [n x]
   (zero? (rem n x)))
@@ -49,7 +49,7 @@ What is the largest prime factor of the number 600851475143?
     (last prime-divisors)))
 ```
 
-1. С ленивой последовательностью (iterate) и отображением (map)
++ С ленивой последовательностью (iterate) и отображением (map)
 
 ```clojure
 (defn lazy-and-map-largest-prime-factor [n]
@@ -58,7 +58,7 @@ What is the largest prime factor of the number 600851475143?
     (last prime-divisor)))
 ```
 
-1. Реализация на языке C++:
++ Реализация на языке C++:
 ``` cpp
 #include <iostream>
 #include <cmath>
@@ -96,22 +96,22 @@ int main(){
 
 Starting with the number 1 and moving to the right in a clockwise direction a 5 by 5 spiral is formed as follows:
 
-21 22 23 24 25
+**21** 22 23 24 **25**
 
-20  7  8  9 10
+20  **7**   8  **9** 10
 
-19  6  1  2 11
+19   6  **1**   2 11
 
-18  5  4  3 12
+18  **5**   4  **3** 12
 
-17 16 15 14 13
+**17** 16 15 14 **13**
 
 It can be verified that the sum of the numbers on the diagonals is 101.
 
 What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 
 ### Решения:
-1. Хвостовая рекурсия
++ Хвостовая рекурсия
 ``` clojure
 (defn spirals [size sum add num c]
   (if (< num (* size size))
@@ -125,7 +125,13 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
   (spirals size 0 2 1 1))
 ```
 
-1. Рекурсия
+Пояснение: Если рассмотреть ряд чисел, попавших в диагонали:
+
+1 3 5 7 9 13 17 21 25 31 37 43 49..., 
+
+то можно заметить, что разница между первыми четырьмя равна 2, между следующими четырьями 4, дальше 6, и так далее разница увеличивается на 2 каждые 4 числа.
+
++ Рекурсия
 ``` clojure
 (defn rec-spiral-diagonals [n]
   (if (= n 1)
@@ -133,7 +139,9 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
     (+ (- (* 4 n n) (* 6 (- n 1))) (rec-spiral-diagonals (- n 2)))))
 ```
 
-1. Модульная реализация (генерация - iterate, фильтрация - filter и свертка - reduce), с использованием ленивой коллекции (iterate) и цикла (loop в вспомогательной функции)
+Пояснение: пусть n - это сторона квадрата, тогда можем заметить, что число в правом верхнем углу такого квадрата равно $n^2$, в левом верхнем $n^2 - (n - 1)$, левом нижнем $n^2 - 2(n-1)$ и в правом нижнем $n^2 - 3(n-1)$. Тогда сумма всех углов одного квадрата со стороной n равна $4n^2 - 6(n-1)$.
+
++ Модульная реализация (генерация - iterate, фильтрация - filter и свертка - reduce), с использованием ленивой коллекции (iterate) и цикла (loop в вспомогательной функции)
 
 ``` clojure
 (defn find-n [x]
@@ -159,8 +167,9 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 (defn lazy-and-modul-spiral-diagonals [n]
   (inc (reduce + (filter diagonal? (filter odd? (take (* n n) (iterate inc 2)))))))
 ```
+Пояснение: в этом варианте решения, используется факт из прошлого решения, что все числа в диагоналях равны $n^2$ или $n^2 - (n - 1)$ или $n^2 - 2(n-1)$ или $n^2 - 3(n-1)$
 
-1. Реализация на языке C++:
++ Реализация на языке C++:
 ```cpp
 #include <iostream>
 using namespace std;
