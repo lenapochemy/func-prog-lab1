@@ -13,23 +13,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      # - name: Checkout code
+      #   uses: actions/checkout@v2
 
-      - name: Set up Clojure
-        uses: DeLaGuardo/setup-clojure@master
-        with:
-          cli: 1.10.3.1040
+      # - name: Set up Clojure
+      #   uses: DeLaGuardo/setup-clojure@master
+      #   with:
+      #     cli: 1.10.3.1040
 
-      - name: Install clj-kondo
-        run: npm install -g clj-kondo
-        
+      # - name: Install clj-kondo
+      #   run: npm install -g clj-kondo
+
       # - name: "Lint with clj-kondo"
       #   run: clj-kondo --lint src test --config .clj-kondo/config-ci.edn
           
       # - name: "Check Clojure Style"
       #   run: cljstyle check --report
 
-      - name: Run Unit tests
-        run: clojure -X:test/run
+      - uses: actions/checkout@v2
+    
+      - name: Set up Clojure environment
+        uses: clojure/actions/setup-clojure@v1
+        
+      - name: Install dependencies
+        run: 
+          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.11.1"}}}' -e '(require\'[clojure.tools.deps :as deps]) (deps/install!)'
+          
+      - name: Run tests
+        run: 
+          clojure -Sdeps '{:deps {org.clojure/clojure {:mvn/version "1.11.1"}
+                                org.clojure/tools.nrepl {:mvn/version "0.8.3"}
+                                org.clojure/clojure.test {:mvn/version "1.11.1"}}}'
+          -e '(require\'[clojure.test :refer :all])
+             (run-tests)'
+
+      # - name: Run Unit tests
+      #   run: clojure -X:test/run
 
