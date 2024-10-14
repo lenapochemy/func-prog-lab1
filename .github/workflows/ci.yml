@@ -25,4 +25,4 @@ jobs:
         run: npm install -g clj-kondo
 
       - name: Run tests
-        run: cd lab1/task8-23 && clojure -A:test
+        run: clojure -A:test
