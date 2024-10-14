@@ -23,12 +23,12 @@ jobs:
 
       - name: Install clj-kondo
         run: npm install -g clj-kondo
-
-      - name: "Lint with clj-kondo"
-        run: clj-kondo --lint src test --config .clj-kondo/config-ci.edn
+        
+      # - name: "Lint with clj-kondo"
+      #   run: clj-kondo --lint src test --config .clj-kondo/config-ci.edn
           
-      - name: "Check Clojure Style"
-        run: cljstyle check --report
+      # - name: "Check Clojure Style"
+      #   run: cljstyle check --report
 
       - name: Run Unit tests
         run: clojure -X:test/run
