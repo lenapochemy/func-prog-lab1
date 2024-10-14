@@ -60,10 +60,6 @@ What is the largest prime factor of the number 600851475143?
 
 + Реализация на языке C++:
 ``` cpp
-#include <iostream>
-#include <cmath>
-using namespace std;
-
 bool is_prime(long long int num){
     for(long long int i = 2; i <= sqrt(num); i++){
         if(num % i == 0){
@@ -82,13 +78,6 @@ long long int largest_prime_factors(long long int num){
     }
     return max;
 }
-
-int main(){
-    cout << largest_prime_factors(12) << endl;
-    cout << largest_prime_factors(13195) << endl;
-    cout << largest_prime_factors(600851475143) << endl;
-    return 0;
-}
 ```
 
 
@@ -98,11 +87,11 @@ Starting with the number 1 and moving to the right in a clockwise direction a 5 
 
 **21** 22 23 24 **25**
 
-20  **7**   8  **9** 10
+20   **7**    8   **9**  10
 
-19   6  **1**   2 11
+19    6   **1**    2  11
 
-18  **5**   4  **3** 12
+18   **5**   4   **3** 12
 
 **17** 16 15 14 **13**
 
@@ -111,7 +100,7 @@ It can be verified that the sum of the numbers on the diagonals is 101.
 What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 
 ### Решения:
-+ Хвостовая рекурсия
+#### Хвостовая рекурсия
 ``` clojure
 (defn spirals [size sum add num c]
   (if (< num (* size size))
@@ -127,7 +116,7 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 
 Пояснение: Если рассмотреть ряд чисел, попавших в диагонали:
 
-1 3 5 7 9 13 17 21 25 31 37 43 49..., 
+ 3 5 7 9 | 13 17 21 25  | 31 37 43 49... 
 
 то можно заметить, что разница между первыми четырьмя равна 2, между следующими четырьями 4, дальше 6, и так далее разница увеличивается на 2 каждые 4 числа.
 
@@ -139,7 +128,7 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
     (+ (- (* 4 n n) (* 6 (- n 1))) (rec-spiral-diagonals (- n 2)))))
 ```
 
-Пояснение: пусть n - это сторона квадрата, тогда можем заметить, что число в правом верхнем углу такого квадрата равно $n^2$, в левом верхнем $n^2 - (n - 1)$, левом нижнем $n^2 - 2(n-1)$ и в правом нижнем $n^2 - 3(n-1)$. Тогда сумма всех углов одного квадрата со стороной n равна $4n^2 - 6(n-1)$.
+Пояснение: пусть $n$ - это сторона квадрата, тогда можем заметить, что число в правом верхнем углу такого квадрата равно $n^2$, в левом верхнем $n^2 - (n - 1)$, левом нижнем $n^2 - 2(n-1)$ и в правом нижнем $n^2 - 3(n-1)$. Тогда сумма всех углов одного квадрата со стороной n равна $4n^2 - 6(n-1)$.
 
 + Модульная реализация (генерация - iterate, фильтрация - filter и свертка - reduce), с использованием ленивой коллекции (iterate) и цикла (loop в вспомогательной функции)
 
@@ -171,9 +160,6 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
 
 + Реализация на языке C++:
 ```cpp
-#include <iostream>
-using namespace std;
-
 int spiral_diagonals(int count){
     int sum = 1;
     int num = 1;
@@ -185,13 +171,6 @@ int spiral_diagonals(int count){
         }
     }
     return sum;
-}
-
-int main(){
-    cout << spiral_diagonals(5) << endl;
-    cout << spiral_diagonals(101) << endl;
-
-    return 0;
 }
 ```
 
