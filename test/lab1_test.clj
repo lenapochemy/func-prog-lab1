@@ -6,11 +6,13 @@
 ;; (def input-problem-3 333333333)
 (def input-problem-3 13195)
 (def input-problem-28 101)
+;; (def input-problem-28 1001)
 
 ;; (def answer-problem-3 6857)
 ;; (def answer-problem-3 333667)
 (def answer-problem-3 29)
 (def answer-problem-28 692101)
+;; (def answer-problem-28 669171001)
 
 (deftest problem-28-test
   (testing "Problem 28: Number Spiral Diagonals"
