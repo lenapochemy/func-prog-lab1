@@ -12,20 +12,23 @@
         true))))
 
 (defn loop-largest-prime-factor [n]
-  (loop [x (quot n 2)]
-    (if (and (zero? (rem n x)) (prime? x))
-      x
-      (recur (dec x)))))
+  (loop [x 2]
+    (if (zero? (rem n x))
+      (if (prime? (/ n x))
+        (/ n x)
+        (recur (inc x)))
+      (recur (inc x)))))
+
 
 ;; problem 3 tail recursion
 
 (defn tail-rec-prime-factor [x n]
-  (if (and (zero? (rem n x)) (prime? x))
-    x
-    (recur (dec x) n)))
+  (if (and (zero? (rem n x)) (prime? (quot n x)))
+    (/ n x)
+    (recur (inc x) n)))
 
 (defn tail-rec-largest-prime-factor [n]
-  (tail-rec-prime-factor (quot n 2) n))
+  (tail-rec-prime-factor 2 n))
 
 
 ;; problem 3 modul
@@ -44,7 +47,6 @@
   (let [primes (filter some? (map #(if (prime? %) % nil) (take (- (quot n 2) 1) (iterate inc 2)))),
         prime-divisor (filter (fn [x] (divisor? n x)) primes)]
     (last prime-divisor)))
-
 
 
 ;; problem 28 tail recursion
@@ -77,18 +79,16 @@
       (inc i)
       (recur (inc i)))))
 
+
 (defn diagonal? [x]
   (let [n (find-n x),
         pow (* n n)]
-    (if (= x pow)
-      true
-      (if (= x (- pow (- n 1)))
-        true
-        (if (= x (- pow (* 2 (- n 1))))
-          true
-          (if (= x (- pow (* 3 (- n 1))))
-            true
-            false))))))
+    (cond
+      (= x pow) true
+      (= x (- pow (- n 1))) true
+      (= x (- pow (* 2 (- n 1)))) true
+      (= x (- pow (* 3 (- n 1)))) true
+      :else false)))
 
 
 (defn lazy-and-modul-spiral-diagonals [n]

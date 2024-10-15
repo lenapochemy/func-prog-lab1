@@ -21,21 +21,23 @@ What is the largest prime factor of the number 600851475143?
         true))))
 
 (defn loop-largest-prime-factor [n]
-  (loop [x (quot n 2)]
-    (if (and (zero? (rem n x)) (prime? x))
-      x
-      (recur (dec x)))))
+  (loop [x 2]
+    (if (zero? (rem n x))
+      (if (prime? (/ n x))
+        (/ n x)
+        (recur (inc x)))
+      (recur (inc x)))))
 ```
 
 + Хвостовая рекурсия
 ```clojure
 (defn tail-rec-prime-factor [x n]
-  (if (and (zero? (rem n x)) (prime? x))
-    x
-    (recur (dec x) n)))
+  (if (and (zero? (rem n x)) (prime? (quot n x)))
+    (/ n x)
+    (recur (inc x) n)))
 
 (defn tail-rec-largest-prime-factor [n]
-  (tail-rec-prime-factor (quot n 2) n))
+  (tail-rec-prime-factor 2 n))
 ```
 
 + Модульная реализация (используются range, filter)
@@ -61,8 +63,8 @@ What is the largest prime factor of the number 600851475143?
 + Реализация на языке C++:
 ``` cpp
 bool is_prime(long long int num){
-    for(long long int i = 2; i <= sqrt(num); i++){
-        if(num % i == 0){
+    for (long long int i = 2; i <= sqrt(num); i++){
+        if (num % i == 0){
             return false;
         }
     }
@@ -71,9 +73,13 @@ bool is_prime(long long int num){
 
 long long int largest_prime_factors(long long int num){
     long long int max = 0;
-    for(long long int i = 2; i <= num / 2; i++){
-        if(num % i == 0 && is_prime(i)){
-            max = i;
+    long long int d;
+    for (long long int i = 2; i <= num / 2; i++){
+        if (num % i == 0){
+            d = num / i;
+            if (is_prime(d)){
+                return d;
+            }
         }
     }
     return max;
@@ -87,11 +93,11 @@ Starting with the number 1 and moving to the right in a clockwise direction a 5 
 
 **21** 22 23 24 **25**
 
-20   **7**    8   **9**  10
+20 **7** 8 **9** 10
 
-19    6   **1**    2  11
+19 6 **1** 2 11
 
-18   **5**   4   **3** 12
+18 **5** 4 **3** 12
 
 **17** 16 15 14 **13**
 
@@ -100,7 +106,7 @@ It can be verified that the sum of the numbers on the diagonals is 101.
 What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 
 ### Решения:
-#### Хвостовая рекурсия
++ Хвостовая рекурсия
 ``` clojure
 (defn spirals [size sum add num c]
   (if (< num (* size size))
