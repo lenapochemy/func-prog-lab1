@@ -87,7 +87,7 @@
   (inc (reduce + (filter diagonal? (filter odd? (take (* n n) (iterate inc 2)))))))
 
 (defn -main
-  [& args]
+  []
   (tail-rec-largest-prime-factor 600851475143)
   (loop-largest-prime-factor 600851475143)
   (modul-largest-prime-factor 600851475143)
