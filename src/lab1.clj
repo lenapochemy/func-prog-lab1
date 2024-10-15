@@ -19,7 +19,6 @@
         (recur (inc x)))
       (recur (inc x)))))
 
-
 ;; problem 3 tail recursion
 
 (defn tail-rec-prime-factor [x n]
@@ -29,7 +28,6 @@
 
 (defn tail-rec-largest-prime-factor [n]
   (tail-rec-prime-factor 2 n))
-
 
 ;; problem 3 modul
 
@@ -48,7 +46,6 @@
         prime-divisor (filter (fn [x] (divisor? n x)) primes)]
     (last prime-divisor)))
 
-
 ;; problem 28 tail recursion
 
 (defn spirals [size sum add num c]
@@ -58,10 +55,8 @@
       (recur size (+ sum num) (+ add 2) (+ num add) 1))
     (+ sum num)))
 
-
 (defn tail-rec-spiral-diagonals [size]
   (spirals size 0 2 1 1))
-
 
 ;; problem 28 recursion
 
@@ -70,7 +65,6 @@
     1
     (+ (- (* 4 n n) (* 6 (- n 1))) (rec-spiral-diagonals (- n 2)))))
 
-
 ;; prblem 28 lazy sequence and modul and loop
 
 (defn find-n [x]
@@ -78,7 +72,6 @@
     (if (and (< (* i i) x) (<= x (* (inc i) (inc i))))
       (inc i)
       (recur (inc i)))))
-
 
 (defn diagonal? [x]
   (let [n (find-n x),
@@ -90,11 +83,8 @@
       (= x (- pow (* 3 (- n 1)))) true
       :else false)))
 
-
 (defn lazy-and-modul-spiral-diagonals [n]
   (inc (reduce + (filter diagonal? (filter odd? (take (* n n) (iterate inc 2)))))))
-
-
 
 (defn -main
   [& args]
