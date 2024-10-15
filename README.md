@@ -46,10 +46,11 @@ What is the largest prime factor of the number 600851475143?
   (zero? (rem n x)))
 
 (defn modul-largest-prime-factor [n]
-  (let [numbers (range 2 (/ n 2)),  ;generation
-        prime-divisors (filter prime? (filter (fn [x] (divisor? n x)) numbers))]  ;filtration
+  (let [numbers (range 2 (/ n 2)), 
+        prime-divisors (filter prime? (filter (fn [x] (divisor? n x)) numbers))] 
     (last prime-divisors)))
 ```
+Это решение не оптимальное и на больших числах выполняется очень долго.
 
 + С ленивой последовательностью (iterate) и отображением (map)
 
@@ -59,6 +60,7 @@ What is the largest prime factor of the number 600851475143?
         prime-divisor (filter (fn [x] (divisor? n x)) primes)]
     (last prime-divisor)))
 ```
+Это решение также как предыдущее оказалось не оптимальным и не подходяшим для больших чисел.
 
 + Реализация на языке C++:
 ``` cpp
